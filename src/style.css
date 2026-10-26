@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Layout: één kolom van max 72rem, ruime secties, het eigen project als breed uitgelicht blok.
+   Kleur: koel papier-wit met kobaltblauw als enige accent; groen alleen voor "beveiligd/ok". */
+@layer base {
+  :root {
+    --paper: 244 246 250;
+    --surface: 255 255 255;
+    --ink: 13 20 36;
+    --muted: 88 98 118;
+    --line: 220 225 234;
+    --accent: 29 63 214;
+    --accent-ink: 255 255 255;
+    --signal: 12 140 102;
+    color-scheme: light;
+  }
+  .dark {
+    --paper: 10 13 20;
+    --surface: 18 23 34;
+    --ink: 232 236 244;
+    --muted: 152 162 182;
+    --line: 36 43 58;
+    --accent: 125 148 255;
+    --accent-ink: 10 13 20;
+    --signal: 62 207 158;
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    background: rgb(var(--paper));
+    color: rgb(var(--ink));
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  h1, h2, h3 {
+    font-family: theme('fontFamily.display');
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+  }
+  ::selection {
+    background: rgb(var(--accent) / 0.25);
+  }
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+@layer components {
+  .gutter {
+    padding-left: max(1.25rem, env(safe-area-inset-left, 0px));
+    padding-right: max(1.25rem, env(safe-area-inset-right, 0px));
+  }
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.14em] text-muted;
+  }
+  .chip {
+    @apply inline-flex items-center rounded-full border border-line bg-surface px-3 py-1 font-mono text-[0.75rem] text-ink/80;
+  }
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition duration-200;
+  }
+  .btn-primary {
+    @apply btn bg-accent text-accent-ink hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-10px_rgb(var(--accent)/0.7)];
+  }
+  .btn-ghost {
+    @apply btn border border-line bg-surface text-ink hover:-translate-y-0.5 hover:border-accent/50;
+  }
+}
+
+/* Scroll-reveal: alleen verbergen als JS draait, en nooit bij reduced motion. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
