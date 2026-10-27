@@ -96,7 +96,7 @@ export const experience = [
   {
     role: 'Bezorger / bediening',
     org: 'Eetcafé Dikke Truus, Alkmaar',
-    period: '2019 – 2025',
+    period: '2019 – heden',
     points: [
       'Bijbaan naast studie: gasten bediend, maaltijden bezorgd en betalingen afgehandeld, ook tijdens drukke piekmomenten.',
     ],
